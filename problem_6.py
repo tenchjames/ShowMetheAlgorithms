@@ -53,12 +53,43 @@ class LinkedList:
         return size
 
 def union(llist_1, llist_2):
-    # Your Solution Here
-    pass
+    values = set()
+    results = LinkedList()
+    current_node = llist_1.head
+    while current_node:
+        if current_node.value not in values:
+            results.append(current_node.value)
+            values.add(current_node.value)
+        current_node = current_node.next
+    
+    current_node = llist_2.head
+    while current_node:
+        if current_node.value not in values:
+            results.append(current_node.value)
+            values.add(current_node.value)
+        current_node = current_node.next
+    
+    return results
+    
 
 def intersection(llist_1, llist_2):
-    # Your Solution Here
-    pass
+    results = LinkedList()
+    l1_values = set()
+    values_added = set()
+
+    current_node = llist_1.head
+    while current_node:
+        l1_values.add(current_node.value)
+        current_node = current_node.next
+
+    current_node = llist_2.head
+    while current_node:
+        if current_node.value in l1_values and current_node.value not in values_added:
+            results.append(current_node.value)
+            values_added.add(current_node.value)
+        current_node = current_node.next
+
+    return results
 
 
 # Test case 1
@@ -96,6 +127,55 @@ print (union(linked_list_3,linked_list_4))
 print (intersection(linked_list_3,linked_list_4))
 
 
+# Test case 3
+
+linked_list_5 = LinkedList()
+linked_list_6 = LinkedList()
+
+element_5 = []
+element_6 = [1, 3, 5, 7, 9, 11]
+
+for i in element_5:
+    linked_list_5.append(i)
+
+for i in element_6:
+    linked_list_6.append(i)
+
+print (union(linked_list_5,linked_list_6))
+print (intersection(linked_list_5,linked_list_6))
+
+# Test case 4
+
+linked_list_7 = LinkedList()
+linked_list_8 = LinkedList()
+
+element_7 = []
+element_8 = []
+
+for i in element_7:
+    linked_list_7.append(i)
+
+for i in element_8:
+    linked_list_8.append(i)
+
+print (union(linked_list_7,linked_list_8))
+print (intersection(linked_list_7,linked_list_8))
 
 
+# Test case 5
+
+linked_list_9 = LinkedList()
+linked_list_10 = LinkedList()
+
+element_9 = [0, 4, 8, 1, 2]
+element_10 = []
+
+for i in element_9:
+    linked_list_9.append(i)
+
+for i in element_10:
+    linked_list_10.append(i)
+
+print (union(linked_list_9,linked_list_10))
+print (intersection(linked_list_9,linked_list_10))
 
