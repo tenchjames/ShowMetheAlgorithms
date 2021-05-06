@@ -47,7 +47,46 @@ def is_user_in_group(user, group):
       user(str): user name/id
       group(class:Group): group to check user membership against
     """
-    return None
+    # want to avoid a cycle, of a deeply nested sub group contains a parent
+    # group then the recursion would never end
+    explored = set()
+    return is_user_in_group_recursive(user, group, explored)
+
+    #if user in group.get_users():
+    #   return True
+    #else:
+    #   for g in group.get_groups():
+    #       if is_user_in_group(user, g):
+    #           return True
+    #return False
+
+def is_user_in_group_recursive(user, group, explored):
+    if user in group.get_users():
+        return True
+    else:
+        for sub_group in group.get_groups():
+            name = group.get_name()
+            # for testing loops
+            #if name in explored:
+            #    print(name)
+            if name not in explored:
+                explored.add(name)
+                if is_user_in_group_recursive(user, sub_group, explored):
+                    return True
+    return False
+            
+
+print(is_user_in_group(sub_child_user, parent))
+
+
+print(is_user_in_group("not_a_user", parent))
+
+# test that recursive step ends
+
+sub_child.add_group(parent)
+
+print(is_user_in_group("not_a_user", parent))
+
 
 
 
