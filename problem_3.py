@@ -110,7 +110,7 @@ def get_encodings(root):
     return encodings
 
 def huffman_encoding(data):
-    if len(data) == 0:
+    if data is None or len(data) == 0:
         root = Node(0, None)
         empty_string_node = Node(0, "")
         root.left = empty_string_node
@@ -231,3 +231,27 @@ if __name__ == "__main__":
     print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
 
     print ("The content of the encoded data is: {}\n".format(decoded_data))
+
+
+    print("===== Test 5 handle None type=====") 
+    another_sentence = None
+
+    print ("The size of the data is:{}\n".format(sys.getsizeof(another_sentence)))
+    print ("The content of the data is: {}\n".format(another_sentence))
+
+    encoded_data, tree = huffman_encoding(another_sentence)
+
+    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+    decoded_data = huffman_decoding(encoded_data, tree)
+
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+
+    print ("The content of the encoded data is: {}\n".format(decoded_data))
+    # expect
+    # for each of the print outs above i expect the encoded size to be larger
+    # than the decoded size and that was the case
+    # for the single character, empty string. The None case was actually larger
+    # but this was a design choice to return and empty string.
+
