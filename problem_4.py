@@ -75,17 +75,19 @@ def is_user_in_group_recursive(user, group, explored):
                     return True
     return False
             
-
+print("Test 1")
 print(is_user_in_group(sub_child_user, parent))
+# expect True
 
-
+print("Test 2")
 print(is_user_in_group("not_a_user", parent))
+# expect False
 
 # test that recursive step ends
-
+print("Test 3")
 sub_child.add_group(parent)
-
 print(is_user_in_group("not_a_user", parent))
+# expect False
 
 
 
