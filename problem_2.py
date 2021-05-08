@@ -56,6 +56,9 @@ def find_files(suffix, path):
        a list of paths
     """
 
+    if suffix is None or path is None:
+        return []
+
     queue = Queue()
     results = []
     queue.enqueue(path)
@@ -86,10 +89,39 @@ def helper(suffix, path, results):
     return results
 
 
+print("Test 1")
 files = find_files("c", "./testdir")
 
 for file in files:
     print(file)
+# expect
+# ./testdir/t1.c
+# ./testdir/subdir1/a.c
+# ./testdir/subdir5/a.c
+# ./testdir/subdir3/subdir1/b.c
+
+print("Test 2")
+files2 = find_files("", "./testdir")
+
+for file in files2:
+    print(file)
+# expect all files to show
+
+print("Test 3")
+
+files3 = find_files(None, "./testdir")
+for file in files3:
+    print(file)
+# expect no files to print
+
+print("Test 4")
+files4 = find_files("keep", "./testdir")
+
+for file in files4:
+    print(file)
+# expect 
+# ./testdir/subdir2/.gitkeep
+# ./testdir/subdir4/.gitkeep
 
 
 
@@ -99,6 +131,11 @@ r_files = find_files_recursive("c", "./testdir")
 for file in r_files:
     print(file)
 
+# expect
+# ./testdir/t1.c
+# ./testdir/subdir1/a.c
+# ./testdir/subdir5/a.c
+# ./testdir/subdir3/subdir1/b.c
 print("done with recursion")
 
 
