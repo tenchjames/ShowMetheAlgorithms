@@ -47,18 +47,40 @@ class Blockchain:
     def __init__(self):
         self.head = None
         self.tail = None
+        self.map = {}
 
     def append(self, data):
         if self.head is None:
-            self.head = Block(datetime.now(), data, 0)
+            block = Block(datetime.now(), data, 0)
+            self.head = block
             self.tail = self.head
-            return
+            self.map[block.hash] = block
+            return block
+
         
         previous_hash = self.tail.hash
         block = Block(datetime.now(), data, previous_hash)
         self.tail.next = block
         self.tail.next.previous = self.tail
         self.tail = self.tail.next
+        self.map[block.hash] = block
+        return block
+    
+    def find_slow(self, hash_code):
+        current_node = self.head
+
+        while current_node:
+            if current_node.hash == hash_code:
+                return current_node
+            current_node = current_node.next
+        return None
+
+    def find(self, hash_code):
+        if hash_code not in self.map:
+            return None
+        else:
+            return self.map[hash_code]
+        
 
     def __str__(self):
         cur_head = self.head
@@ -69,13 +91,37 @@ class Blockchain:
         return out_string
 
 #Test 1
+print("Test 1")
 blockchain = Blockchain()
 blockchain.append("Hello")
 blockchain.append("World")
-blockchain.append("foo")
-blockchain.append("bar")
+foo_block = blockchain.append("foo")
+bar_block = blockchain.append("bar")
 
 print(blockchain)
+# expect 4 items with each having the previous hash value match the hash of the
+# prior block
+
+print("Test 2")
+print(foo_block.hash)
+found_foo = blockchain.find(foo_block.hash)
+print(found_foo.hash)
+# expect both prints to be equal
+
+print("Test 2a")
+print(foo_block.hash)
+found_foo = blockchain.find_slow(foo_block.hash)
+print(found_foo.hash)
+# expect both prints to be equal
+
+print("Test 3")
+unknown_block = blockchain.find("0000")
+print(unknown_block)
+# expect None 
 
 
+print("Test 3a")
+unknown_block = blockchain.find_slow("0000")
+print(unknown_block)
+# expect None 
 
