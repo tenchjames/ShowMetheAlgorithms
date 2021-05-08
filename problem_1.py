@@ -163,6 +163,7 @@ class LRU_Cache(object):
         self.map[key] = node
 
 
+print("Test 1 from the assignment")
 our_cache = LRU_Cache(5)
 
 our_cache.set(1, 1)
@@ -179,4 +180,26 @@ our_cache.set(5, 5)
 our_cache.set(6, 6)
 
 print(our_cache.get(3))      # returns -1 because the cache reached it's capacity and 3 was the least recently used entry
+
+# see tests above on my doublely linked list too
+print("Test 2")
+one_item_cache = LRU_Cache(1)
+
+one_item_cache.set(1, "A string")
+one_item_cache.set(2, "Another string")
+print(one_item_cache.get(1))
+# expect -1 because cache should have removed 
+
+print("Test 3")
+
+big_cache = LRU_Cache(1000000)
+for i in range(0, 1000000):
+    big_cache.set(i, i)
+
+print(big_cache.get(0))
+# expect 0
+
+big_cache.set(1000001, 1000001)
+print(big_cache.get(1))
+# expect -1
 

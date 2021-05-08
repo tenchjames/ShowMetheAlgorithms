@@ -1,55 +1,3 @@
-"""
-For this problem, the goal is to write code for finding all files under a directory (and all directories beneath it) that end with ".c"
-
-Here is an example of a test directory listing, which can be downloaded here:
-./testdir
-./testdir/subdir1
-./testdir/subdir1/a.c
-./testdir/subdir1/a.h
-./testdir/subdir2
-./testdir/subdir2/.gitkeep
-./testdir/subdir3
-./testdir/subdir3/subsubdir1
-./testdir/subdir3/subsubdir1/b.c
-./testdir/subdir3/subsubdir1/b.h
-./testdir/subdir4
-./testdir/subdir4/.gitkeep
-./testdir/subdir5
-./testdir/subdir5/a.c
-./testdir/subdir5/a.h
-./testdir/t1.c
-./testdir/t1.h
-Python's os module will be useful—in particular, you may want to use the following resources:
-
-os.path.isdir(path)
-
-os.path.isfile(path)
-
-os.listdir(directory)
-
-os.path.join(...)
-
-Note: os.walk() is a handy Python method which can achieve this task very easily. However, for this problem you are not allowed to use os.walk().
-
-Here is some code for the function to get you started:
-
-## Locally save and call this file ex.py ##
-
-# Code to demonstrate the use of some of the OS modules in python
-
-import os
-
-# Let us print the files in the directory in which you are running this script
-print (os.listdir("."))
-
-# Let us check if this file is indeed a file!
-print (os.path.isfile("./ex.py"))
-
-# Does the file end with .py?
-print ("./ex.py".endswith(".py"))
-
-
-"""
 
 import os
 
@@ -124,10 +72,34 @@ def find_files(suffix, path):
 
     return results
 
+def find_files_recursive(suffix, path):
+    results = []
+    return helper(suffix, path, results)
+
+def helper(suffix, path, results):
+    if os.path.isfile(path):
+        if path.endswith(suffix):
+            results.append(path)
+    elif os.path.isdir(path):
+        for item in os.listdir(path):
+            helper(suffix, path + "/" + item, results)
+    return results
+
+
 files = find_files("c", "./testdir")
 
 for file in files:
     print(file)
+
+
+
+print("Recursive call")
+r_files = find_files_recursive("c", "./testdir")
+
+for file in r_files:
+    print(file)
+
+print("done with recursion")
 
 
 
