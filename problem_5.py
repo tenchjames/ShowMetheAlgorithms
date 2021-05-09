@@ -50,6 +50,8 @@ class Blockchain:
         self.map = {}
 
     def append(self, data):
+        if data is None:
+            return None
         if self.head is None:
             block = Block(datetime.now(), data, 0)
             self.head = block
@@ -67,6 +69,8 @@ class Blockchain:
         return block
     
     def find_slow(self, hash_code):
+        if hash_code is None:
+            return None
         current_node = self.head
 
         while current_node:
@@ -124,4 +128,15 @@ print("Test 3a")
 unknown_block = blockchain.find_slow("0000")
 print(unknown_block)
 # expect None 
+
+print("Test 4")
+none_block = blockchain.append(None)
+print(none_block)
+# expect None 
+
+print("Test 5")
+none_block = blockchain.find(None)
+print(none_block)
+# expect None
+
 
