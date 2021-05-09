@@ -12,6 +12,7 @@ algorithm consistent I added a "dummy" node as an internal node and added
 a default value to the dummy node for that single character as a default.
 I chose to make the None type return and empty string as well.
 
+Time complexity = O(n log n)
 overall the running time is O (n log n) where n = the number of characters to
 encode. For encoding to get the frequencies we loop over all n characters and
 build the dictionary. we then loop over x frequencies to insert them into the
@@ -24,3 +25,19 @@ function traverses the height of the tree that was built. The huffman tree is
 is mostly balanced because each iteration expands both the left and the right 
 side of the tree. this height is log n. Overall none of these operations are 
 nested so we are bounted by n log n * some constant. so this why O(n log n)
+
+
+Space complexity = O(n)
+
+get_frequencies holds a table of characters. in the worse case each characters
+is unique so all characters will be stored.
+so this is O(n)
+
+get_encodings builds a dictionary holding each character. Once again if each 
+character was unique then this would hold n characters = O(n)
+
+huffman_encoding uses a priority queue which will store all of the data nodes
+in the leaf nodes. In addition it will store n - 1 internal nodes, this is 2n
+so in big O it is still O(n) storage
+
+huffman_decoding uses no additioal storage so it is O(1)

@@ -12,3 +12,9 @@ However implementing this change also increases the storage for the blockchain
 so that needs to be considered with a large structure. I did implement two 
 versions to practice both. the find_slow will run in O(n) time but require less 
 storage, where find will operate in O(1) time but require additional storage.
+
+
+Space complexity = O(n) where n == the number of blocks added to the chain
+Each block is stored one time in the linked list. Even with the hash map 
+implementation an additional n hashcodes and pointers need to be stored. 
+But this is just adding an addition n. So in big O this is still O(n)
