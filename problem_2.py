@@ -123,7 +123,11 @@ for file in files4:
 # ./testdir/subdir2/.gitkeep
 # ./testdir/subdir4/.gitkeep
 
-
+print("Test 5")
+files5 = find_files("c", None)
+# expect empty array so no results
+for file in files5:
+    print(file)
 
 print("Recursive call")
 r_files = find_files_recursive("c", "./testdir")
