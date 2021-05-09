@@ -130,7 +130,10 @@ class LRU_Cache(object):
         # Initialize class variables
         self.queue = DoublyLinkedQueue()
         self.map = {}
-        self.capacity = capacity
+        if capacity is None or capacity < 0:
+            self.capacity = 1
+        else:
+            self.capacity = capacity
 
     def get(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent.
@@ -202,4 +205,20 @@ print(big_cache.get(0))
 big_cache.set(1000001, 1000001)
 print(big_cache.get(1))
 # expect -1
+
+print("Test 4")
+none_cache = LRU_Cache(None)
+none_cache.set(1, 1)
+none_cache.set(2, 2)
+print(none_cache.get(1))
+# expect -1 because of default to 1 when None is passed in constructor
+
+
+print("Test 5")
+negative_cache = LRU_Cache(-4)
+negative_cache.set(1, 1)
+negative_cache.set(2, 2)
+print(negative_cache.get(1))
+# expect -1 because of default to 1 when negative is passed in constructor
+
 
