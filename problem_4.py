@@ -47,6 +47,8 @@ def is_user_in_group(user, group):
       user(str): user name/id
       group(class:Group): group to check user membership against
     """
+    if group is None or user is None:
+        return False
     # want to avoid a cycle, of a deeply nested sub group contains a parent
     # group then the recursion would never end
     explored = set()
@@ -89,6 +91,11 @@ sub_child.add_group(parent)
 print(is_user_in_group("not_a_user", parent))
 # expect False
 
+print("Test 4")
+print(is_user_in_group(sub_child_user, None))
+# expect None
 
 
+print("Test 5")
+print(is_user_in_group(None, parent))
 
